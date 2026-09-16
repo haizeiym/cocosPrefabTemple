@@ -136,6 +136,7 @@ export class FileName extends BaseComponent {
 
         this._bindUIs.forEach((bindUI, index) => {
             bindUI.Img("ImgContent").spriteFrame = imgs[index];
+            bindUI.Data = index;
             this._addClick(bindUI.BNode, this._itemClick.bind(this, bindUI));
         });
 

@@ -84,5 +84,99 @@ export class FileName extends BaseComponent {
 ### moreClickChose
 #### 多个按钮选择模板，每个item 都要普通背景，选中背景，及展示图片
 ```ts
+import { _decorator, instantiate, Node, SpriteFrame } from "cc";
+import { BaseComponent, BindUI, ResLoad } from "lsscript";
+import { VH } from "../common/VHLayout";
+const { ccclass } = _decorator;
+
+@ccclass("FileName")
+export class FileName extends BaseComponent {
+    private _bindUI: BindUI;
+    private _onDesCall: () => void;
+
+    private _nodeItem: Node;
+    private _nodeContent: Node;
+
+    private _bindUIs: BindUI[];
+    private _lastBindUI: BindUI;
+
+    private _clickItemCall: (bindUI?: BindUI) => void;
+
+    public async setInit(args: {
+        bundleName: string;
+        resPath: string;
+        parent?: Node;
+        defaultIndex?: number;
+        gridXNum?: number;
+        clickItemCall?: (bindUI?: BindUI) => void;
+        onDesCall?: () => void;
+    }): Promise<void> {
+        this._clickItemCall = args.clickItemCall;
+        this._onDesCall = args.onDesCall;
+        if (args?.parent?.isValid) {
+            this._setInit(args.parent);
+        } else {
+            this.init();
+        }
+        const imgs = await ResLoad.dirT(args.bundleName, args.resPath, SpriteFrame, true);
+        if (!this?.isValid) return this.NodeDestroy();
+
+        args.gridXNum = args.gridXNum || 4;
+        args.defaultIndex = args.defaultIndex || 0;
+        this._bindUIs = [this._getUI(this._nodeItem)];
+        for (let i = 0, l = imgs.length - 1; i < l; i++) {
+            const element = instantiate(this._nodeItem);
+            element.setParent(this._nodeContent);
+            element.setPosition(-100000, 0, 0);
+            this._bindUIs.push(this._getUI(element));
+        }
+
+        this._bindUIs.forEach((bindUI, index) => {
+            bindUI.Img("ImgContent").spriteFrame = imgs[index];
+            this._addClick(bindUI.BNode, this._itemClick.bind(this, bindUI));
+        });
+
+        VH.setGridLayout(
+            this._nodeContent,
+            this._bindUIs.map((bindUI) => bindUI.BNode),
+            args.gridXNum,
+            10,
+            10,
+            true
+        );
+
+        this._lastBindUI = this._bindUIs[args.defaultIndex];
+        this._itemClick(this._lastBindUI);
+    }
+
+    protected _initView(): void {
+        this._bindUI = this._getUI(this.node);
+        this._nodeItem = this._bindUI.Node("NodeItem");
+        this._nodeContent = this._bindUI.Node("NodeContent");
+    }
+
+    private _itemClick(bindUI: BindUI) {
+        if (this._lastBindUI === bindUI) return;
+        if (this._lastBindUI) {
+            this._lastBindUI.Node("NodeNormal").active = true;
+            this._lastBindUI.Node("NodeSelected").active = false;
+        }
+        bindUI.Node("NodeNormal").active = false;
+        bindUI.Node("NodeSelected").active = true;
+        this._lastBindUI = bindUI;
+        this._clickItemCall?.(bindUI);
+    }
+
+    protected _initEvent(): void {
+        this._addClick(this._bindUI.Btn("BtnClose"), this.NodeDestroy);
+    }
+
+    protected onDestroy(): void {
+        this?._onDesCall();
+    }
+
+    protected _destroyBefore(): void {}
+}
+
 
 ```

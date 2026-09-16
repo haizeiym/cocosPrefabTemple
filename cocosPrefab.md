@@ -108,6 +108,8 @@ export class FileName extends BaseComponent {
         parent?: Node;
         defaultIndex?: number;
         gridXNum?: number;
+        spaceX?: number;
+        spaceY?: number;
         clickItemCall?: (bindUI?: BindUI) => void;
         onDesCall?: () => void;
     }): Promise<void> {
@@ -123,11 +125,12 @@ export class FileName extends BaseComponent {
 
         args.gridXNum = args.gridXNum || 4;
         args.defaultIndex = args.defaultIndex || 0;
-        this._bindUIs = [this._getUI(this._nodeItem)];
+        const bindUI = this._getUI(this._nodeItem);
+        this._show(bindUI, false);
+        this._bindUIs = [bindUI];
         for (let i = 0, l = imgs.length - 1; i < l; i++) {
             const element = instantiate(this._nodeItem);
             element.setParent(this._nodeContent);
-            element.setPosition(-100000, 0, 0);
             this._bindUIs.push(this._getUI(element));
         }
 
@@ -140,31 +143,36 @@ export class FileName extends BaseComponent {
             this._nodeContent,
             this._bindUIs.map((bindUI) => bindUI.BNode),
             args.gridXNum,
-            10,
-            10,
+            args.spaceX ?? 10,
+            args.spaceY ?? 10,
             true
         );
 
         this._lastBindUI = this._bindUIs[args.defaultIndex];
+        this._show(this._lastBindUI, true);
         this._itemClick(this._lastBindUI);
+        this._bindUIs.forEach((bindUI) => {
+            this._UIO(bindUI.BNode).opacity = 255;
+        });
     }
 
     protected _initView(): void {
         this._bindUI = this._getUI(this.node);
+        this._nodeContent = this._bindUI.NodeOnce("NodeContent");
         this._nodeItem = this._bindUI.Node("NodeItem");
-        this._nodeContent = this._bindUI.Node("NodeContent");
     }
 
     private _itemClick(bindUI: BindUI) {
         if (this._lastBindUI === bindUI) return;
-        if (this._lastBindUI) {
-            this._lastBindUI.Node("NodeNormal").active = true;
-            this._lastBindUI.Node("NodeSelected").active = false;
-        }
-        bindUI.Node("NodeNormal").active = false;
-        bindUI.Node("NodeSelected").active = true;
+        this._show(this._lastBindUI, false);
+        this._show(bindUI, true);
         this._lastBindUI = bindUI;
         this._clickItemCall?.(bindUI);
+    }
+
+    private _show(bindUI: BindUI, isShowSelect: boolean = false) {
+        this._UIO(bindUI.Node("NodeNormal")).opacity = isShowSelect ? 0 : 255;
+        this._UIO(bindUI.Node("NodeSelected")).opacity = isShowSelect ? 255 : 0;
     }
 
     protected _initEvent(): void {
@@ -177,6 +185,7 @@ export class FileName extends BaseComponent {
 
     protected _destroyBefore(): void {}
 }
+
 
 
 ```

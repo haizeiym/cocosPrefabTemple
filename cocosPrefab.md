@@ -201,19 +201,13 @@ const { ccclass } = _decorator;
 @ccclass("FileName")
 export class FileName extends BaseComponent {
     private _bindUI: BindUI;
-    private _imgHead: Sprite;
-    private _txtName: Label;
-    private _txtMoney: Label;
 
-    private _btnHeadCall: ((comp: BaseComponent) => void) | null = null;
+    private _btnHeadCall: ((comp?: BaseComponent) => void) | null = null;
 
     public setInit(args: {
         parent?: Node;
-        imgHead?: Sprite;
-        txtName?: Label;
-        txtMoney?: Label;
-        bindUI?: BindUI;
-        onHeadCall?: (comp: BaseComponent) => void;
+        compGetCall?: (comps: { bindUI?: BindUI; imgHead?: Sprite; txtName?: Label; txtMoney?: Label }) => void;
+        onHeadCall?: (comp?: BaseComponent) => void;
     }): void {
         if (args.parent?.isValid) {
             this._setInit(args.parent);
@@ -221,20 +215,18 @@ export class FileName extends BaseComponent {
             this.init();
         }
 
-        args.imgHead = this._imgHead;
-        args.txtName = this._txtName;
-        args.txtMoney = this._txtMoney;
-        args.bindUI = this._bindUI;
-
+        args.compGetCall?.({
+            bindUI: this._bindUI,
+            imgHead: this._bindUI.Img("ImgHead"),
+            txtName: this._bindUI.Txt("TxtName"),
+            txtMoney: this._bindUI.Txt("TxtMoney")
+        });
         this._btnHeadCall = args.onHeadCall;
     }
 
     protected _initView(): void {
         this._bindUI = this._getUI(this.node);
         this._bindUI.NodeOnce("NodeHead");
-        this._imgHead = this._bindUI.Img("ImgHead");
-        this._txtName = this._bindUI.Txt("TxtName");
-        this._txtMoney = this._bindUI.Txt("TxtMoney");
     }
 
     protected _initEvent(): void {

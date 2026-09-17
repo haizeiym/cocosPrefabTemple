@@ -1,0 +1,187 @@
+{
+  "name": "Root",
+  "active": true,
+  "x": 0,
+  "y": 0,
+  "width": 1366,
+  "height": 768,
+  "zIndex": 0,
+  "components": {},
+  "children": [
+    {
+      "name": "NodeLobbyHead",
+      "active": true,
+      "x": -33,
+      "y": -325,
+      "width": 100,
+      "height": 100,
+      "zIndex": 0,
+      "components": {
+        "TemplateComponent": {
+          "templateType": "LobbyHead",
+          "templateAlias": "",
+          "templatePath": "https://raw.githubusercontent.com/haizeiym/cocosPrefabTemple/refs/heads/main/cocosPrefab.md"
+        }
+      },
+      "children": [
+        {
+          "name": "ImgNameBg",
+          "active": true,
+          "x": -401,
+          "y": 0,
+          "width": 243,
+          "height": 53,
+          "zIndex": 0,
+          "components": {
+            "SpriteComponent": {
+              "framePath": "场次选择/UI/jinbidi.png",
+              "color": "#FFFFFF",
+              "sizeMode": "TRIMMED",
+              "type": "SIMPLE"
+            }
+          },
+          "children": []
+        },
+        {
+          "name": "TxtName",
+          "active": true,
+          "x": -399,
+          "y": 1,
+          "width": 233,
+          "height": 49,
+          "zIndex": 1,
+          "components": {
+            "LabelComponent": {
+              "text": "name",
+              "color": "#FFFFFF",
+              "fontSize": 24,
+              "lineHeight": 24,
+              "fontFamily": "Arial",
+              "enableWrapText": false,
+              "isBold": true,
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "CENTER",
+              "cacheMode": "BITMAP",
+              "overflow": "NONE"
+            }
+          },
+          "children": []
+        },
+        {
+          "name": "NodeHead",
+          "active": true,
+          "x": -568,
+          "y": -1,
+          "width": 100,
+          "height": 100,
+          "zIndex": 2,
+          "components": {
+            "ButtonComponent": {
+              "target": ".",
+              "transition": "SCALE"
+            }
+          },
+          "children": [
+            {
+              "name": "ImgHeadBg",
+              "active": true,
+              "x": 0,
+              "y": 0,
+              "width": 93,
+              "height": 120,
+              "zIndex": 0,
+              "components": {
+                "SpriteComponent": {
+                  "framePath": "场次选择/UI/tx.png",
+                  "color": "#FFFFFF",
+                  "sizeMode": "TRIMMED",
+                  "type": "SIMPLE"
+                }
+              },
+              "children": []
+            },
+            {
+              "name": "ImgHead",
+              "active": true,
+              "x": 0,
+              "y": 0,
+              "width": 71,
+              "height": 88,
+              "zIndex": 1,
+              "components": {
+                "SpriteComponent": {
+                  "framePath": "场次选择/UI/tc2.png",
+                  "color": "#FFFFFF",
+                  "sizeMode": "TRIMMED",
+                  "type": "SIMPLE"
+                }
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "ImgMoneyBg",
+          "active": true,
+          "x": -123,
+          "y": 0,
+          "width": 267,
+          "height": 53,
+          "zIndex": 3,
+          "components": {
+            "SpriteComponent": {
+              "framePath": "场次选择/UI/jinbidikb.png",
+              "color": "#FFFFFF",
+              "sizeMode": "TRIMMED",
+              "type": "SIMPLE"
+            }
+          },
+          "children": []
+        },
+        {
+          "name": "ImgMoneyIcon",
+          "active": true,
+          "x": -231,
+          "y": 0,
+          "width": 51,
+          "height": 50,
+          "zIndex": 4,
+          "components": {
+            "SpriteComponent": {
+              "framePath": "场次选择/UI/jinbi.png",
+              "color": "#FFFFFF",
+              "sizeMode": "TRIMMED",
+              "type": "SIMPLE"
+            }
+          },
+          "children": []
+        },
+        {
+          "name": "TxtMoney",
+          "active": true,
+          "x": -96,
+          "y": 0,
+          "width": 209,
+          "height": 48,
+          "zIndex": 5,
+          "components": {
+            "LabelComponent": {
+              "text": "123132123",
+              "color": "#FFFFFF",
+              "fontSize": 24,
+              "lineHeight": 24,
+              "fontFamily": "Arial",
+              "enableWrapText": false,
+              "isBold": true,
+              "horizontalAlign": "LEFT",
+              "verticalAlign": "CENTER",
+              "cacheMode": "BITMAP",
+              "overflow": "NONE"
+            }
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

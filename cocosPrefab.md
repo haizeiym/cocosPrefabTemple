@@ -192,7 +192,7 @@ export class FileName extends BaseComponent {
 ```
 
 ### LobbyHead
-#### 个人信息显示模板包括头像(头像框，头像)，名称(背景，名称)，金币(背景，金币数量)
+#### 个人信息显示模板包括头像(头像框，头像)，名称(背景，名称)，金币(背景，金币数量) 结构参考LobbyHead.json
 ```ts
 import { _decorator, Label, Node, Sprite } from "cc";
 import { BaseComponent, BindUI } from "lsscript";

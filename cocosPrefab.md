@@ -190,3 +190,60 @@ export class FileName extends BaseComponent {
 
 
 ```
+
+### LobbyHead
+#### 个人信息显示模板包括头像(头像框，头像)，名称(背景，名称)，金币(背景，金币数量)
+```ts
+import { _decorator, Label, Node, Sprite } from "cc";
+import { BaseComponent, BindUI } from "lsscript";
+const { ccclass } = _decorator;
+
+@ccclass("FileName")
+export class FileName extends BaseComponent {
+    private _bindUI: BindUI;
+    private _imgHead: Sprite;
+    private _txtName: Label;
+    private _txtMoney: Label;
+
+    private _btnHeadCall: ((comp: BaseComponent) => void) | null = null;
+
+    public setInit(args: {
+        parent?: Node;
+        imgHead?: Sprite;
+        txtName?: Label;
+        txtMoney?: Label;
+        bindUI?: BindUI;
+        onHeadCall?: (comp: BaseComponent) => void;
+    }): void {
+        if (args.parent?.isValid) {
+            this._setInit(args.parent);
+        } else {
+            this.init();
+        }
+
+        args.imgHead = this._imgHead;
+        args.txtName = this._txtName;
+        args.txtMoney = this._txtMoney;
+        args.bindUI = this._bindUI;
+
+        this._btnHeadCall = args.onHeadCall;
+    }
+
+    protected _initView(): void {
+        this._bindUI = this._getUI(this.node);
+        this._bindUI.NodeOnce("NodeHead");
+        this._imgHead = this._bindUI.Img("ImgHead");
+        this._txtName = this._bindUI.Txt("TxtName");
+        this._txtMoney = this._bindUI.Txt("TxtMoney");
+    }
+
+    protected _initEvent(): void {
+        this._addClick(this._bindUI.Node("NodeHead"), () => {
+            this._btnHeadCall?.(this);
+        });
+    }
+
+    protected _destroyBefore(): void {}
+}
+
+```

@@ -122,7 +122,8 @@ export class FileName extends BaseComponent {
         }
         const imgs = await ResLoad.dirT(args.bundleName, args.resPath, SpriteFrame, true);
         if (!this?.isValid) return this.NodeDestroy();
-
+        imgs.sort((a, b) => (a.name || "").localeCompare(b.name || "", undefined, { numeric: true }));
+        
         args.gridXNum = args.gridXNum || 4;
         args.defaultIndex = args.defaultIndex || 0;
         const bindUI = this._getUI(this._nodeItem);

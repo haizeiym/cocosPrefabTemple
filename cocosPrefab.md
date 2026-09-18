@@ -112,6 +112,7 @@ export class FileName extends BaseComponent {
         spaceX?: number;
         spaceY?: number;
         gridXNum?: number;
+        filterStr?: string;
         clickItemCall?: (bindUI?: BindUI) => void;
         onDesCall?: () => void;
     }): Promise<void> {
@@ -122,9 +123,13 @@ export class FileName extends BaseComponent {
         } else {
             this.init();
         }
-        const imgs = await ResLoad.dirT(args.bundleName, args.resPath, SpriteFrame, true);
+        let imgs = await ResLoad.dirT(args.bundleName, args.resPath, SpriteFrame, true);
         if (!this?.isValid) return this.NodeDestroy();
-        imgs.sort((a, b) => (a.name || "").localeCompare(b.name || "", undefined, { numeric: true }));
+        if (args.filterStr) {
+            imgs = imgs.filter((e) => e.name.includes(args.filterStr));
+        }
+        const collator = new Intl.Collator(undefined, { numeric: true });
+        imgs.sort((a, b) => collator.compare(a.name, b.name));
 
         args.defaultIndex = Math.min(args.defaultIndex || 0, imgs.length - 1);
         const bindUI = this._getUI(this._nodeItem);

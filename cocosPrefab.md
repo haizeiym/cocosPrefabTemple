@@ -255,3 +255,80 @@ export class FileName extends BaseComponent {
 }
 
 ```
+
+### VoiceSet
+#### 声音设置类型  0为所有音效，1为音效，2为背景音乐 结构参考VoiceSet.json
+```ts
+import { _decorator, CCInteger, Node } from "cc";
+import { BaseComponent, BindUI, GG } from "lsscript";
+const { ccclass, property } = _decorator;
+
+@ccclass("FileName")
+export class FileName extends BaseComponent {
+    @property({ displayName: "声音设置类型 0为所有音效，1为音效，2为背景音乐" })
+    private _setType: 0 | 1 | 2 = 0;
+    @property({
+        type: CCInteger,
+        displayName: "声音设置类型 0为所有音效，1为音效，2为背景音乐"
+    })
+    public set setType(value: 0 | 1 | 2) {
+        this._setType = value;
+    }
+
+    public get setType() {
+        return this._setType;
+    }
+
+    private _bindUI: BindUI;
+
+    public setInit(args?: { parent?: Node }): void {
+        if (args?.parent?.isValid) {
+            this._setInit(args.parent);
+        } else {
+            this.init();
+        }
+        GG.clsExtra.isInitAudio();
+        if (this._setType === 0) {
+            this._setStatus(GG.clsExtra.getIsStopAudio());
+        } else if (this._setType === 1) {
+            this._setStatus(GG.clsExtra.getIsStopEffect());
+        } else if (this._setType === 2) {
+            this._setStatus(GG.clsExtra.getIsStopBgm());
+        }
+    }
+
+    protected _initView(): void {
+        this._bindUI = this._getUI(this.node);
+    }
+
+    protected _initEvent(): void {
+        this._addClick(this.node, this._voiceSetCall);
+    }
+
+    private _voiceSetCall() {
+        if (this._setType === 0) {
+            GG.clsExtra.stopAudio(!GG.clsExtra.getIsStopAudio());
+            this._setStatus(GG.clsExtra.getIsStopAudio());
+        } else if (this._setType === 1) {
+            GG.clsExtra.stopEffect(!GG.clsExtra.getIsStopEffect());
+            this._setStatus(GG.clsExtra.getIsStopEffect());
+        } else if (this._setType === 2) {
+            GG.clsExtra.stopBgm(!GG.clsExtra.getIsStopBgm());
+            this._setStatus(GG.clsExtra.getIsStopBgm());
+        }
+    }
+
+    private _setStatus(isOpen: boolean) {
+        const nodeOpen = this._bindUI.Node("NodeOpen");
+        nodeOpen.x = isOpen ? 0 : -1000000;
+        this._UIO(nodeOpen).opacity = isOpen ? 255 : 0;
+
+        const nodeClose = this._bindUI.Node("NodeClose");
+        this._UIO(nodeClose).opacity = isOpen ? 0 : 255;
+        nodeClose.x = isOpen ? -1000000 : 0;
+    }
+
+    protected _destroyBefore(): void {}
+}
+
+```

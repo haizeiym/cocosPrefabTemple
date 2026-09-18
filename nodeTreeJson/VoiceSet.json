@@ -1,0 +1,59 @@
+{
+  "name": "Root",
+  "active": true,
+  "x": 0,
+  "y": 0,
+  "width": 1366,
+  "height": 768,
+  "zIndex": 0,
+  "components": {},
+  "children": [
+    {
+      "name": "NodeVoiceSet",
+      "active": true,
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "zIndex": 0,
+      "components": {
+        "ButtonComponent": {
+          "target": ".",
+          "transition": "SCALE"
+        }
+      },
+      "children": [
+        {
+          "name": "NodeOpen",
+          "active": true,
+          "x": 0,
+          "y": 0,
+          "width": 100,
+          "height": 100,
+          "zIndex": 0,
+          "components": {
+            "OpacityComponent": {
+              "opacity": 0
+            }
+          },
+          "children": []
+        },
+        {
+          "name": "NodeClose",
+          "active": true,
+          "x": 0,
+          "y": 0,
+          "width": 100,
+          "height": 100,
+          "zIndex": 1,
+          "components": {
+            "OpacityComponent": {
+              "opacity": 0
+            }
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}

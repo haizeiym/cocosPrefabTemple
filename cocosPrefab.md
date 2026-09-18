@@ -165,7 +165,7 @@ export class FileName extends BaseComponent {
 
         this._lastBindUI = this._bindUIs[args.defaultIndex];
         this._show(this._lastBindUI, true);
-        this._itemClick(this._lastBindUI);
+        this._clickItemCall?.(this._lastBindUI);
         this._bindUIs.forEach((bindUI) => {
             this._UIO(bindUI.BNode).opacity = 255;
         });

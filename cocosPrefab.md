@@ -191,7 +191,9 @@ export class FileName extends BaseComponent {
     }
 
     protected _initEvent(): void {
-        this._addClick(this._bindUI.Btn("BtnClose"), this.NodeDestroy);
+        if (this._bindUI.Btn("BtnClose")) {
+            this._addClick(this._bindUI.Btn("BtnClose"), this.NodeDestroy);
+        }
     }
 
     protected onDestroy(): void {

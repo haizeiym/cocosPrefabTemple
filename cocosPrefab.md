@@ -173,7 +173,7 @@ export class FileName extends BaseComponent {
 
     protected _initView(): void {
         this._bindUI = this._getUI(this.node);
-        this._nodeContent = this._bindUI.NodeOnce("NodeContent");
+        this._nodeContent = this._bindUI.NodeOnce("NodeContent") || this._bindUI.BNode;
         this._nodeItem = this._bindUI.Node("NodeItem");
     }
 
@@ -197,7 +197,7 @@ export class FileName extends BaseComponent {
     }
 
     protected onDestroy(): void {
-        this?._onDesCall();
+        this._onDesCall?.();
     }
 
     protected _destroyBefore(): void {}

@@ -1,0 +1,108 @@
+{
+  "name": "Root",
+  "active": true,
+  "x": 0,
+  "y": 0,
+  "width": 1366,
+  "height": 768,
+  "zIndex": 0,
+  "components": {},
+  "children": [
+    {
+      "name": "NodeContent",
+      "active": true,
+      "x": 0,
+      "y": 0,
+      "width": 100,
+      "height": 100,
+      "zIndex": 0,
+      "components": {},
+      "children": [
+        {
+          "name": "NodeItem",
+          "active": true,
+          "x": 0,
+          "y": 0,
+          "width": 100,
+          "height": 100,
+          "zIndex": 0,
+          "components": {
+            "ButtonComponent": {
+              "target": ".",
+              "transition": "SCALE"
+            },
+            "OpacityComponent": {
+              "opacity": 0
+            }
+          },
+          "children": [
+            {
+              "name": "NodeNormal",
+              "active": true,
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "zIndex": 0,
+              "components": {
+                "SpriteComponent": {
+                  "framePath": "",
+                  "color": "#FFFFFF",
+                  "sizeMode": "TRIMMED",
+                  "type": "SIMPLE"
+                },
+                "OpacityComponent": {
+                  "opacity": 0
+                }
+              },
+              "children": []
+            },
+            {
+              "name": "NodeSelected",
+              "active": true,
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "zIndex": 1,
+              "components": {
+                "SpriteComponent": {
+                  "framePath": "",
+                  "color": "#FFFFFF",
+                  "sizeMode": "TRIMMED",
+                  "type": "SIMPLE"
+                },
+                "OpacityComponent": {
+                  "opacity": 0
+                }
+              },
+              "children": []
+            },
+            {
+              "name": "ImgContent",
+              "active": true,
+              "x": 0,
+              "y": 0,
+              "width": 100,
+              "height": 100,
+              "zIndex": 2,
+              "components": {
+                "SpriteComponent": {
+                  "framePath": "",
+                  "color": "#FFFFFF",
+                  "sizeMode": "TRIMMED",
+                  "type": "SIMPLE"
+                },
+                "LangSpriteComponent": {
+                  "scriptPath": "LangSprite.ts",
+                  "scriptUuid": "0cb6bad8-8385-4e29-b40e-926998049d2a"
+                }
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

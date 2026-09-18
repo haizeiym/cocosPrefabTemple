@@ -82,7 +82,7 @@ export class FileName extends BaseComponent {
 ```
 
 ### moreClickChose
-#### 多个按钮选择模板，每个item 都要普通背景，选中背景，及展示图片
+#### 多个按钮选择模板，每个item 都要普通背景，选中背景，及展示图片  结构参考moreClickChose.json
 ```ts
 import { _decorator, instantiate, Node, SpriteFrame } from "cc";
 import { BaseComponent, BindUI, ResLoad } from "lsscript";
@@ -107,9 +107,11 @@ export class FileName extends BaseComponent {
         resPath: string;
         parent?: Node;
         defaultIndex?: number;
-        gridXNum?: number;
+        arrangeType?: 0 | 1 | 2; //0为grid，1为TopToBottom，2为LeftToRight
+        space?: number;
         spaceX?: number;
         spaceY?: number;
+        gridXNum?: number;
         clickItemCall?: (bindUI?: BindUI) => void;
         onDesCall?: () => void;
     }): Promise<void> {
@@ -123,9 +125,8 @@ export class FileName extends BaseComponent {
         const imgs = await ResLoad.dirT(args.bundleName, args.resPath, SpriteFrame, true);
         if (!this?.isValid) return this.NodeDestroy();
         imgs.sort((a, b) => (a.name || "").localeCompare(b.name || "", undefined, { numeric: true }));
-        
-        args.gridXNum = args.gridXNum || 4;
-        args.defaultIndex = args.defaultIndex || 0;
+
+        args.defaultIndex = Math.min(args.defaultIndex || 0, imgs.length - 1);
         const bindUI = this._getUI(this._nodeItem);
         this._show(bindUI, false);
         this._bindUIs = [bindUI];
@@ -141,14 +142,21 @@ export class FileName extends BaseComponent {
             this._addClick(bindUI.BNode, this._itemClick.bind(this, bindUI));
         });
 
-        VH.setGridLayout(
-            this._nodeContent,
-            this._bindUIs.map((bindUI) => bindUI.BNode),
-            args.gridXNum,
-            args.spaceX ?? 10,
-            args.spaceY ?? 10,
-            true
-        );
+        const nodes = this._bindUIs.map((bindUI) => bindUI.BNode);
+        const arrangeType = args.arrangeType ?? 0;
+        if (arrangeType === 1) {
+            VH.setVerLayout(this._nodeContent, nodes, args.space ?? 10);
+        } else if (arrangeType === 2) {
+            VH.setHorLayout(this._nodeContent, nodes, args.space ?? 10);
+        } else {
+            VH.setGridLayout(
+                this._nodeContent,
+                nodes,
+                args.gridXNum || 4,
+                args.spaceX ?? args.space ?? 10,
+                args.spaceY ?? args.space ?? 10
+            );
+        }
 
         this._lastBindUI = this._bindUIs[args.defaultIndex];
         this._show(this._lastBindUI, true);
